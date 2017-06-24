@@ -15,8 +15,8 @@ public class WriteCommand implements Command {
 			throws IOException, ServletException, InterruptedException {
 		
 		MultipartRequest multi = null;
-		int sizeLimit = 10 * 1024 * 1024 ; // 10�ް��Դϴ�.
-		String savePath = "C:\\Temp";//request.getRealPath("/upload");
+		int sizeLimit = 10 * 1024 * 1024 ; // 10메가바이트 
+		String savePath = "/Users/zack27/temp/";//request.getRealPath("/upload");
 //		System.out.println(savePath);
 		multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy()); 
 		

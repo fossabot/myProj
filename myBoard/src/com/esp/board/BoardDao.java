@@ -76,7 +76,23 @@ public class BoardDao {
 	}
 
 	public Article selectOne(int no) {
-		return null;
+		Article article = new Article();
+		String sql = "select * from board where id = ?";	
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, no);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+			    article.setNo(rs.getInt("id"));
+			    article.setTitle(rs.getString("title"));
+			    article.setPath(rs.getString("path"));
+			    article.setContent(rs.getString("contents"));
+			    article.setName(rs.getString("name"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return article;
 	}
 
 	public void update(Article article) {
@@ -89,6 +105,7 @@ public class BoardDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, no);
 			stmt.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

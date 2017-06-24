@@ -1,11 +1,8 @@
 package com.esp.board;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
-
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,21 +10,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CommandController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private String command;
 	private Command cmd;
 	private HashMap<String,Command> commandMap;
 	private HashMap<String,String> viewMap;
-	private ServletContext sc;
-	private RequestDispatcher rd;
 	private boolean isRedirect;
 	
 	public CommandController(){
 		super();
-		System.out.println("CommandController ª˝º∫");
-		command = null;
+		System.out.println("CommandController ÏÉùÏÑ±Ïûê");
 		cmd = null;
-		sc = null;
-		rd = null;
 		isRedirect = false;
 		
 		viewMap = new HashMap<String,String>();
@@ -35,18 +26,22 @@ public class CommandController extends HttpServlet {
 		commandMap.put("/list.do", new ListCommand());
 		commandMap.put("/write.do", new WriteCommand());
 		commandMap.put("/delete.do", new DeleteCommand());
+		commandMap.put("/detail_form.do", new DetailCommand());
+		commandMap.put("/download.do", new DownLoadCommand());
 		viewMap.put("/list.do", "/BoardList.jsp");
 		viewMap.put("/write_form.do", "/WriteForm.jsp");
 		viewMap.put("/write.do", "list.do");
 		viewMap.put("/delete.do", "list.do");
+		viewMap.put("/detail_form.do", "/DetailForm.jsp");
+		viewMap.put("/download.do", "/DetailForm.jsp");
 	}
 	
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {
 		request.setCharacterEncoding("UTF-8");
 		String uri = request.getRequestURI();
-		System.out.println(uri);
+//		System.out.println(uri);
 		String contextPath = request.getContextPath();
-        command = uri.substring(contextPath.length());
+        String command = uri.substring(contextPath.length());
         
         System.out.println(command);     
         
@@ -62,9 +57,12 @@ public class CommandController extends HttpServlet {
         		System.out.println(view + " forward");
         		RequestDispatcher disp = request.getRequestDispatcher(view);
         		disp.forward(request, response);
-        	} else {
-        		System.out.println(view + " sendRedirect");
-        		response.sendRedirect(view);
+        	}else{
+        		if(command.compareTo("/download.do") != 0)
+        		{
+        			System.out.println(view + " sendRedirect");
+        			response.sendRedirect(view);
+        		}
         	}       	
         	System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbb");      	
 		} catch (InterruptedException e) {

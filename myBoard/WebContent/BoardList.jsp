@@ -6,6 +6,15 @@
 <html>
 <head>
 <meta charset="UTF-8" />
+<style>  
+table, th, td {  
+    border: 1px solid black;  
+    border-collapse: collapse;  
+}  
+th, td {
+    padding: 10px;
+}
+</style> 
 <script type="text/javascript">
 var check = false;
 function CheckAll(){
@@ -43,42 +52,37 @@ function RemoveUnit(){
 </script>
 </head>
 <body style="font-size: 11px;">
-<h1>목록</h1>
+<h1 align="center">파일목록</h1>
 <%
 List<Article> list = (List<Article>)request.getAttribute("list");
+String id = null;
 int totalCount = 3;
 if(list != null)
 	totalCount = list.size();
 %>
-<%=totalCount %>                
+              
 <form id="filelist" name="filelist" method="post">
-	<table width='70%' cellpadding='5' cellspacing='0' border='1' align='center' style='border-collapse:collapse; border:1px gray solid;'>
+	<table width='70%' align='center'>
 		<tr>
-			<td style='border:0px gray solid;'></td>
-			<td style='border:0px gray solid;'></td>
-			<td style='border:0px gray solid;'></td>
-			<td style='border:0px gray solid;'><a href="" onclick="javascript:RemoveUnit()">삭제</a></td>
-			<td style='border:0px gray solid;'><a href=write_form.do>파일업로드</a></td>
+			<td colspan=3 align="center"><input type="button" value="삭 제" onclick="javascript:RemoveUnit()"></td>
+			<td align="center"><a href=write_form.do>파일업로드</a></td>
 		</tr>
 		<tr align='center'>
-			<td style='border:1px gray solid;' align='left'><input type=checkbox name=remove_all onclick="javascript:CheckAll()"
-
-출처: http://galgum.tistory.com/1 [개인주의]></td>
-			<td style='border:1px gray solid;'>번호</td>
-			<td style='border:1px gray solid;'>제목</td>
-			<td style='border:1px gray solid;'>파일명</td>
-			<td style='border:1px gray solid;'>작성자</td>
+			<td align="center"><input type=checkbox name=remove_all onclick="javascript:CheckAll()"></td>
+			<td>번호</td>
+			<td>제목</td>
+			<td>작성자</td>
 		</tr>
 <%
 if (totalCount == 0)
-	out.println("<tr> <td style=border:1px gray solid; align=center>업로드한 파일이 없습니다</td></tr>");
+	out.println("<tr> <td colspan=4 align=center>업로드한 파일이 없습니다</td></tr>");
 else {
 	for(int i = totalCount - 1;i>=0;--i) {
+		id = String.valueOf(i + 1);
 		out.println("<tr>");
-		out.println("<td>" + "<input type=checkbox name=remove_unit value=" + String.valueOf(list.get(i).getNo()).toString()+ ">" + "</td>");
-		out.println("<td align='center'>" + String.valueOf(i + 1).toString() + "</td>");
-		out.println("<td>" + list.get(i).getTitle() + "</td>");
-		out.println("<td>" + list.get(i).getPath() + "</td>");
+		out.println("<td align='center'>" + "<input type=checkbox name=remove_unit value=" + String.valueOf(list.get(i).getNo()).toString()+ ">" + "</td>");
+		out.println("<td align='center'>" + id.toString() + "</td>");
+		out.println("<td>" + "<a href=detail_form.do?title=" + list.get(i).getTitle() + "&id=" + String.valueOf(list.get(i).getNo()).toString() + ">" + list.get(i).getTitle() + "</a>" + "</td>");
 		out.println("<td align='center'>" + list.get(i).getName() + "</td>");
 		out.println("</tr>");
 	}

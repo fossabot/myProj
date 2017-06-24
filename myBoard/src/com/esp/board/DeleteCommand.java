@@ -12,12 +12,15 @@ public class DeleteCommand implements Command {
 	public boolean execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, InterruptedException {
 
+			System.out.println("DeleteCommand");
 			String temp = request.getParameter("unit");
-			String[] unit = temp.split(",");
-			int size = unit.length;
-			for(int i = 0;i<size;++i){
-				System.out.println(unit[i].toString());
-				BoardDao.getInstance().delete(Integer.parseInt(unit[i]));
+			if(temp != null) {
+				String[] unit = temp.split(",");
+				int size = unit.length;
+				for(int i = 0;i<size;++i){
+					System.out.println(unit[i].toString());
+					BoardDao.getInstance().delete(Integer.parseInt(unit[i]));
+				}
 			}
 			
 		return true;
