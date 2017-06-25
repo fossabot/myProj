@@ -28,12 +28,14 @@ public class CommandController extends HttpServlet {
 		commandMap.put("/delete.do", new DeleteCommand());
 		commandMap.put("/detail_form.do", new DetailCommand());
 		commandMap.put("/download.do", new DownLoadCommand());
+		commandMap.put("/search.do", new SearchCommand());
 		viewMap.put("/list.do", "/BoardList.jsp");
 		viewMap.put("/write_form.do", "/WriteForm.jsp");
 		viewMap.put("/write.do", "list.do");
 		viewMap.put("/delete.do", "list.do");
 		viewMap.put("/detail_form.do", "/DetailForm.jsp");
 		viewMap.put("/download.do", "/DetailForm.jsp");
+		viewMap.put("/search.do", "/BoardList.jsp");
 	}
 	
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {

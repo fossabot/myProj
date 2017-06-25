@@ -18,7 +18,7 @@ public class BoardDao {
 	private BoardDao() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn =  DriverManager.getConnection("jdbc:mysql://192.168.1.9:3306/Board","root", "choon27");
+			conn =  DriverManager.getConnection("jdbc:mysql://172.20.10.5:3306/Board","root", "choon27");
 			if (conn != null)
 				System.out.println("DB Connect Ok");
 			
@@ -57,8 +57,28 @@ public class BoardDao {
         return list;
 	}
 
-	public int getTotalRecord(String keyword) {
-		return 0;
+	public List<Article> getSearchRecord(String keyword) {
+		String sql = "select title,path,name from board where title=?";
+		List<Article> list = new ArrayList<Article>();
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, keyword);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+			    Article article = new Article();
+			    article.setNo(rs.getInt("id"));
+			    article.setTitle(rs.getString("title"));
+			    article.setPath(rs.getString("path"));
+			    article.setContent(rs.getString("contents"));
+			    article.setName(rs.getString("name"));
+			    
+			    list.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	public void write(Article article) {		

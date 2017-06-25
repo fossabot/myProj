@@ -16,8 +16,19 @@ th, td {
 }
 </style> 
 <script type="text/javascript">
-var check = false;
+function SearchKeyword() {
+	var form = document.search;
+	form.method = post;
+	form.action = "search.do";
+	form.submit();
+}
+
+function StartPage() {
+	location.href = "list.do"
+}
+
 function CheckAll(){
+	var check = false;
 	var allchk = document.getElementsByName("remove_all");
 	var chk = document.getElementsByName("remove_unit");
 	if(check == false){
@@ -60,11 +71,21 @@ int totalCount = 3;
 if(list != null)
 	totalCount = list.size();
 %>
-              
-<form id="filelist" name="filelist" method="post">
-	<table width='70%' align='center'>
+
+<form id="search" name="search" method="post">
+	<table>
 		<tr>
-			<td colspan=3 align="center"><input type="button" value="삭 제" onclick="javascript:RemoveUnit()"></td>
+			<td colspan=3 align="center"><input type="text" name="keyword"></td>
+			<td align="center"><input type="button" value="찾기" onclick="javascript:SearchKeyword()"></td>
+		</tr>
+	</table>
+</form>
+          
+<form id="filelist" name="filelist" method="post">
+	<table width='70%' align='center'>		
+		<tr>
+			<td align="center"><input type="button" value="처음으로" onclick="javascript:StartPage()"></td>
+			<td colspan=2 align="center"><input type="button" value="삭 제" onclick="javascript:RemoveUnit()"></td>
 			<td align="center"><a href=write_form.do>파일업로드</a></td>
 		</tr>
 		<tr align='center'>
