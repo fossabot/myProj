@@ -1,6 +1,7 @@
 package com.esp.board;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ public class DeleteCommand implements Command {
 
 			System.out.println("DeleteCommand");
 			String temp = request.getParameter("unit");
+			myLogger.getInstance().getLogger().log(Level.INFO, "DeleteCommand arg is " + temp);
 			if(temp != null) {
 				String[] unit = temp.split(",");
 				int size = unit.length;
