@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ page import="com.esp.board.*" %>
-<%@ page import="java.util.*" %>    
+<%@ page import="java.util.*" %>   
+<%@ page import="java.net.URLEncoder" %> 
 
 <!DOCTYPE html>
 <html>
@@ -103,7 +104,7 @@ else {
 		out.println("<tr>");
 		out.println("<td align='center'>" + "<input type=checkbox name=remove_unit value=" + String.valueOf(list.get(i).getNo()).toString()+ ">" + "</td>");
 		out.println("<td align='center'>" + id.toString() + "</td>");
-		out.println("<td>" + "<a href=detail_form.do?title=" + list.get(i).getTitle() + "&id=" + String.valueOf(list.get(i).getNo()).toString() + ">" + list.get(i).getTitle() + "</a>" + "</td>");
+		out.println("<td>" + "<a href=detail_form.do?title=" + URLEncoder.encode(list.get(i).getTitle()) + "&id=" + String.valueOf(list.get(i).getNo()).toString() + ">" + list.get(i).getTitle() + "</a>" + "</td>");
 		out.println("<td align='center'>" + list.get(i).getName() + "</td>");
 		out.println("</tr>");
 	}
