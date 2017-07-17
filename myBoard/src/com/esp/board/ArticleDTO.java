@@ -1,6 +1,6 @@
 package com.esp.board;
 
-public class Article {
+public class ArticleDTO {
     private int no;
     private String title;
     private String content;
@@ -34,7 +34,7 @@ public class Article {
     
     public void setPath(String path) {
     	if (path.length() == 0)
-    		this.path = "ÆÄÀÏ ÀúÀå ÇÏÁö ¾ÊÀ½.";
+    		this.path = "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.";
     	else 
     		this.path = path;
     }

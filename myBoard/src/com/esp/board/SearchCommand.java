@@ -12,7 +12,7 @@ public class SearchCommand implements Command {
 	public boolean execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, InterruptedException {
 		String keyword = request.getParameter("keyword");
-		List<Article> list = BoardDao.getInstance().getSearchRecord(keyword);
+		List<ArticleDTO> list = BoardDao.getInstance().getSearchRecord(keyword);
 		request.setAttribute("list", list);
 		return false;
 	}

@@ -13,7 +13,7 @@ public class DetailCommand implements Command {
 		String title = request.getParameter("title");
 		String id = request.getParameter("id");
 		
-		Article article = BoardDao.getInstance().selectOne(Integer.parseInt(id));
+		ArticleDTO article = BoardDao.getInstance().selectOne(Integer.parseInt(id));
 		request.setAttribute("article", article);
 		return false;
 	}

@@ -11,7 +11,7 @@ public class ListCommand implements Command {
 	public boolean execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, InterruptedException {
         
-		List<Article> list = BoardDao.getInstance().getBoardList();
+		List<ArticleDTO> list = BoardDao.getInstance().getBoardList();
 //        List<Article> list = dao.getBoardList();
         System.out.println(list.size());
         request.setAttribute("list", list);

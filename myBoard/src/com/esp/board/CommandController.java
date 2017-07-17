@@ -37,7 +37,7 @@ public class CommandController extends HttpServlet {
 		viewMap.put("/detail_form.do", "/DetailForm.jsp");
 		viewMap.put("/download.do", "/DetailForm.jsp");
 		viewMap.put("/search.do", "/BoardList.jsp");
-		viewMap.put("/registre.do", "/Member.jsp");
+		viewMap.put("/register.do", "Member.jsp");
 	}
 	
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException,IOException {

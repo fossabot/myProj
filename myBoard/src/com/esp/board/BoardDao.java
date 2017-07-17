@@ -18,7 +18,7 @@ public class BoardDao {
 	private BoardDao() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn =  DriverManager.getConnection("jdbc:mysql://172.20.10.5:3306/Board","root", "choon27");
+			conn =  DriverManager.getConnection("jdbc:mysql://localhost:3306/Board","root", "choon27");
 			if (conn != null)
 				System.out.println("DB Connect Ok");
 			
@@ -33,15 +33,15 @@ public class BoardDao {
 		return instance;
 	}
 	
-	public List<Article> getBoardList() {
-		List<Article> list = new ArrayList<Article>();
+	public List<ArticleDTO> getBoardList() {
+		List<ArticleDTO> list = new ArrayList<ArticleDTO>();
         String sql = "select * from board";
         
         try {
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-			    Article article = new Article();
+			    ArticleDTO article = new ArticleDTO();
 			    article.setNo(rs.getInt("id"));
 			    article.setTitle(rs.getString("title"));
 			    article.setPath(rs.getString("path"));
@@ -57,15 +57,15 @@ public class BoardDao {
         return list;
 	}
 
-	public List<Article> getSearchRecord(String keyword) {
+	public List<ArticleDTO> getSearchRecord(String keyword) {
 		String sql = "select title,path,name from board where title=?";
-		List<Article> list = new ArrayList<Article>();
+		List<ArticleDTO> list = new ArrayList<ArticleDTO>();
 		try {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, keyword);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-			    Article article = new Article();
+			    ArticleDTO article = new ArticleDTO();
 			    article.setNo(rs.getInt("id"));
 			    article.setTitle(rs.getString("title"));
 			    article.setPath(rs.getString("path"));
@@ -81,7 +81,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public void write(Article article) {		
+	public void write(ArticleDTO article) {		
 		try {
 			String sql = "insert into board(title,name,path,contents) values (?,?,?,?)";
 			stmt = conn.prepareStatement(sql);
@@ -95,8 +95,8 @@ public class BoardDao {
 		} 
 	}
 
-	public Article selectOne(int no) {
-		Article article = new Article();
+	public ArticleDTO selectOne(int no) {
+		ArticleDTO article = new ArticleDTO();
 		String sql = "select * from board where id = ?";	
 		try {
 			stmt = conn.prepareStatement(sql);
@@ -115,8 +115,8 @@ public class BoardDao {
 		return article;
 	}
 
-	public void update(Article article) {
-		
+	public void update(ArticleDTO article) {
+	
 	}
 
 	public void delete(int no) {
@@ -129,5 +129,40 @@ public class BoardDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int checkUser(String userID) {
+		String sql = "select * from register where userID = ?";	
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, userID);
+			rs = stmt.executeQuery();
+			if (rs.next() || userID.equals("")) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public int registerUser(UserDTO user) {
+		String sql = "insert into register values (?,?,?,?,?,?)";
+
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, user.getUserID());
+			stmt.setString(2, user.getUserPassword());
+			stmt.setString(3, user.getUserName());
+			stmt.setInt(4,  user.getUserAge());
+			stmt.setString(5,  user.getUserGender());
+			stmt.setString(6, user.getUserEmail());
+			return stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}	
 	}
 }

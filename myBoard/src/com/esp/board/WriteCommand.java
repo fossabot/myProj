@@ -20,7 +20,7 @@ public class WriteCommand implements Command {
 //		System.out.println(savePath);
 		multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8", new DefaultFileRenamePolicy()); 
 		
-		Article article = new Article();
+		ArticleDTO article = new ArticleDTO();
 		String fileName = multi.getFilesystemName("filename");
 		System.out.println(fileName);
 		String title = multi.getParameter("title");

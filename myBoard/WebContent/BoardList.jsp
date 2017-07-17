@@ -61,12 +61,16 @@ function RemoveUnit(){
 	
 	location.href = "delete.do?unit=" + data;
 }
+
+function UserRegister() {
+	location.href = "Member.jsp"
+}
 </script>
 </head>
 <body style="font-size: 11px;">
 <h1 align="center">파일목록</h1>
 <%
-List<Article> list = (List<Article>)request.getAttribute("list");
+List<ArticleDTO> list = (List<ArticleDTO>)request.getAttribute("list");
 String id = null;
 int totalCount = 3;
 if(list != null)
@@ -74,10 +78,11 @@ if(list != null)
 %>
 
 <form id="search" name="search" method="post">
-	<table>
+	<table width='70%' align='center'>
 		<tr>
-			<td colspan=3 align="center"><input type="text" name="keyword"></td>
+			<td colspan=2 align="center"><input type="text" name="keyword"></td>
 			<td align="center"><input type="button" value="찾기" onclick="javascript:SearchKeyword()"></td>
+			<td align="center"><input type="button" value="회원가입" onclick="javascript:UserRegister()"></td>
 		</tr>
 	</table>
 </form>

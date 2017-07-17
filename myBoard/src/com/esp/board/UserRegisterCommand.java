@@ -12,6 +12,8 @@ public class UserRegisterCommand implements Command {
 	public boolean execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, InterruptedException {
 		
+		System.out.println("UserRegister");
+		
 		String userID = request.getParameter("userID");
 		String userPassword1 = request.getParameter("userPassword1");
 		String userPassword2 = request.getParameter("userPassword2");
@@ -20,8 +22,14 @@ public class UserRegisterCommand implements Command {
 		String userEmail = request.getParameter("userEmail");
 		String userAge = request.getParameter("userAge");
 		
-		if(userPassword1.equals(userPassword2)) {
-			request.getSession().setAttribute("messageType", "오류메시지");
+		if(userID.length() == 0) {
+			request.getSession().setAttribute("messageType", "오류 메시지");
+			request.getSession().setAttribute("messageContent","모든 내용을 입력해 주세요.");
+			return true;
+		}
+		
+		if(userPassword1.equals(userPassword2) == false) {
+			request.getSession().setAttribute("messageType", "오류 메시지");
 			request.getSession().setAttribute("messageContent", "비밀번호가 일치하지 않습니다.");
 			return true;
 		}
@@ -38,9 +46,12 @@ public class UserRegisterCommand implements Command {
 		int ret = BoardDao.getInstance().registerUser(userDTO);
 		
 		if(ret < 1 ) {
-			request.getSession().setAttribute("messageType", "오류메시지");
+			request.getSession().setAttribute("messageType", "오류 메시지");
 			request.getSession().setAttribute("messageContent", "회원가입이 실패했습니다.");
 			return true;
+		} else if (ret == 1) {
+			request.getSession().setAttribute("messageType", "성공 메시지");
+			request.getSession().setAttribute("messageContent", "회원가입이 성공했습니다.");
 		}
 		return false;
 	}
